@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar 2024</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .month {
+      width: calc(100% / 3);
+      box-sizing: border-box;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header {
+      background-color: #3498db;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .days {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .day {
+      width: calc(100% / 7);
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    .weekend {
+      background-color: #f8f8f8;
+    }
+
+    .today {
+      background-color: #2ecc71;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  function createCalendar(year) {
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    for (let month = 0; month < 12; month++) {
+      const monthContainer = document.createElement('div');
+      monthContainer.className = 'month';
+
+      const header = document.createElement('div');
+      header.className = 'header';
+      header.textContent = months[month] + ' ' + year;
+      monthContainer.appendChild(header);
+
+      const daysList = document.createElement('ul');
+      daysList.className = 'days';
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('li');
+        dayElement.className = 'day';
+        dayElement.textContent = day;
+
+        // Highlight today's date
+        const today = new Date();
+        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+          dayElement.classList.add('today');
+        }
+
+        // Mark weekends with a different color
+        const dayOfWeek = new Date(year, month, day).getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+          dayElement.classList.add('weekend');
+        }
+
+        daysList.appendChild(dayElement);
+      }
+
+      monthContainer.appendChild(daysList);
+      document.body.appendChild(monthContainer);
+    }
+  }
+
+  // Call the function to create the calendar for the year 2024
+  createCalendar(2024);
+</script>
+
+</body>
+</html>
